@@ -1,2 +1,2 @@
-# PPTI 21
+# Jawaban Algorithm & Programming
 Do not REDISTRIBUTE this repository!!!
