@@ -11,23 +11,23 @@ void swap (long long int *a, long long int *b) {
     *b = temp;
 }
 
-int partition(long long int A[], long long int low, long long int high) {
-    long long int i = low - 1;
-    for (int j = low; j < high; j++) {
-        if (A[j] <= A[high]) {
-            i++;
-            swap(&A[i], &A[j]);
+int partition(long long int A[], long long int low, long long int high) { // return pivot index
+    long long int i = low - 1;// index elemen terkecil
+    for (int j = low; j < high; j++) { // j adalah index elemen yang sedang di cek
+        if (A[j] <= A[high]) { // jika elemen ke j lebih kecil dari elemen terakhir
+            i++; // index elemen terkecil bertambah
+            swap(&A[i], &A[j]); // tukar elemen ke i dengan elemen ke j
         }
     }
-    swap(&A[i+1], &A[high]);
-    return i + 1;
+    swap(&A[i+1], &A[high]); // tukar elemen ke i+1 dengan elemen terakhir // elemen terakhir menjadi pivot
+    return i + 1; // return index pivot
 }
 
-void quickSort(long long int A[], long long int low, long long int high) {
-    if (low < high) {
-        int pivot = partition(A, low, high);
-        quickSort(A, low, pivot - 1);
-        quickSort(A, pivot + 1, high);
+void quickSort(long long int A[], long long int low, long long int high) { // low index elemen terkecil, high index elemen terbesar
+    if (low < high) { // jika low lebih kecil dari high
+        int pivot = partition(A, low, high); // pivot adalah index elemen terakhir
+        quickSort(A, low, pivot - 1); // rekursif quicksort untuk elemen sebelum pivot
+        quickSort(A, pivot + 1, high); // rekursif quicksort untuk elemen setelah pivot
     }
 }
 
