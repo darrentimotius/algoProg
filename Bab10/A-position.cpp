@@ -7,6 +7,7 @@ int binarySearch(int A[], int low, int high, int target){
     if (A[mid] == target) return mid+1;
     else if (A[mid] < target) return binarySearch(A, mid + 1, high, target);
     else if (A[mid] > target) return binarySearch(A, low, mid-1, target);
+    return -2;
 }
 
 int main() {
