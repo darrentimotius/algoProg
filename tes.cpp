@@ -1,20 +1,42 @@
 #include <stdio.h>
 
+char map[10][11] {
+    "##########",
+    "#        #",
+    "#        #",
+    "#        #",
+    "#        #",
+    "#        #",
+    "#        #",
+    "#        #",
+    "#        #",
+    "##########"
+};
+
+void printMap() {
+    printf("\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%s\n", map[i]);
+    }
+    printf("\n");
+}
+
+void floodFill(int x, int y) {
+    if (map[x][y] == '#' || map[x][y] == '.') return;
+    else if (map[x][y] == ' ') {
+        map[x][y] = '.';
+        printMap();
+    }
+
+    floodFill(x+1, y);
+    floodFill(x-1, y);
+    floodFill(x, y+1);
+    floodFill(x, y-1);
+}
+
 int main() {
-    FILE *file;
-    file = fopen("testdata.in", "r");
-    int N;
-    fscanf(file, "%d\n", &N);
-
-    char nama[200][200], random[200][200];
-    int angka[200];
-    for (int i = 0; i < N; i++) {
-        fscanf(file, "%[^#]#%d#%[^\n]\n", nama[i], &angka[i], random[i]);
-    }
-
-    for (int i = 0; i < N; i++) {
-        printf("%s %d %s\n", nama[i], angka[i], random[i]);
-    }
-    // fclose(file);
+    printMap();
+    floodFill(1, 1);
+    printMap();
     return 0;
 }
