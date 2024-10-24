@@ -1,44 +1,54 @@
 #include <stdio.h>
+#include <string.h>
 
-int main(void) {
-   const char SALARY_PROMPT[] = "\nEnter annual salary (0 to exit): ";
-   int annualSalary;
-   int deduction;
-   int totalDeductions;
-   double taxRate;
-   int taxToPay;
+int main() {
+    int N;
+    char input[99999];
+    scanf("%d %[^\n]", &N, input); getchar();
 
-   printf("%s", SALARY_PROMPT);
-   scanf("%d", &annualSalary);
+    char array[25][15];
+    char temp[25];
 
-   while (annualSalary > 0) {
-      // FIXME: Add a while loop to gather deductions. Use the variables
-      // deduction and totalDeduction for deduction handling.
-      // End the inner while loop when a deduction <= 0 is entered.
+    int counterKata = 0;
+    int counterTemp = 0;
+    int l = strlen(input);
+    for (int i = 0; i <= l; i++) {
+        if (input[i] == ' ' || input[i] == '\0') {
+            temp[counterTemp] = '\0';
+            strcpy(array[counterKata], temp);
+            // printf("i = %d\ntemp = %s\narray kata ke %d = %s\n\n", i, temp, counterKata, array[counterKata]);
+            counterKata++;
+            counterTemp = 0;
+        } else {
+            temp[counterTemp] = input[i];
+            // printf("i = %d\ninput = %c\ntemp = %s\n\n", i, input[i], temp);
+            counterTemp++;
+        }
+    }
 
-      // Determine the tax rate from the annual salary
-      if (annualSalary <= 20000) {
-         taxRate = 0.10;        // 0.10 is 10% written as a decimal
-      }
-      else if (annualSalary <= 50000) {
-         taxRate = 0.20;
-      }
-      else if (annualSalary <= 100000) {
-         taxRate = 0.30;
-      }
-      else {
-         taxRate = 0.40;
-      }
+    // sebuah array dianggap string kalo paling belakangnya itu null terminator
+    // contohnya "hey\0"
 
-      taxToPay = (int)(annualSalary * taxRate);   // Truncate tax to an integer amount
-      printf("Annual salary: %d\n", annualSalary);
-      printf("Tax rate: %lf\n", taxRate);
-      printf("Tax to pay: %d\n", taxToPay);
+    // printf("string kita awalnya kayak gini : %s\n\nSekarang jadi : \n", input);
+    // for (int i = 0; i < N; i++) {
+    //     printf("%s\n", array[i]);
+    // }
+    // printf("\n\n");
 
-      // Get the next annual salary
-      printf("%s\n", SALARY_PROMPT);
-      scanf("%d", &annualSalary);
-   }
+    int counterYangSama[25];
+    for (int i = 0; i < N; i++) {
+        counterYangSama[i]++;
+        for (int j = i+1; j < N; j++) {
+            if (strcmp(array[i], array[j]) == 0) {
+                counterYangSama[i]++;
+                counterYangSama[j]++;
+                // printf("array[i] = %s\narray[j] = %s\n\n", array[i], array[j]);
+            }
+        }
+    }
 
-   return 0;
+    for (int i = 0; i < N; i++) {
+        printf("%s - %d\n", array[i], counterYangSama[i]);
+    }
+    return 0;
 }
