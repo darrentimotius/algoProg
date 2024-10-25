@@ -29,6 +29,7 @@ void printBubbleSort(int array[], int n) {
 
 // quick sort
 int partition(int array[], int low, int high) {
+    // melakukan sorting berdasarkan pivot
     int i = low - 1;
     for (int j = low; j < high; j++) {
         if (array[j] <= array[high]) {
@@ -37,14 +38,14 @@ int partition(int array[], int low, int high) {
         }
     }
     swap(&array[i+1], &array[high]);
-    return i + 1;
+    return i + 1; // balikin lokasi pivotnya
 }
 
 void quickSort(int array[], int low, int high) {
-    if (low < high) {
+    if (low < high) { // lakuin geser pivot kalo masih belum ketemu di tengah
         int pivot = partition(array, low, high);
-        quickSort(array, low, pivot - 1);
-        quickSort(array, pivot + 1, high);
+        quickSort(array, low, pivot - 1); // geser pivot dari kanan sampe ke tengah
+        quickSort(array, pivot + 1, high); // geser pivot dari kiri sampe ke tengah
     }
 }
 
@@ -61,24 +62,24 @@ void printQuickSort(int array[], int low, int high, int n) {
 
 // binary search
 int binarySearchRecursion(int array[], int low, int high, int target) {
-    if (low > high) return -1;
+    if (low > high) return -1; // kalo ga ketemu, print -1
 
     int mid = low + (high - low) / 2;
 
     if (array[mid] == target) return mid + 1;
-    else if (array[mid] < target) return binarySearchRecursion(array, mid + 1, high, target);
-    else if (target < array[mid]) return binarySearchRecursion(array, low, mid - 1, target);
+    else if (array[mid] < target) return binarySearchRecursion(array, mid + 1, high, target); // kalo lokasinya masih di sebelah kiri dari target, geser ke kanan sampe ketemu target
+    else if (target < array[mid]) return binarySearchRecursion(array, low, mid - 1, target); // kalo lokasinya masih di sebelah kanan dari target, geser ke kiri sampe ketemu target
 }
 
 int binarySearchLooping(int array[], int low, int high, int target) {
-    while (low <= high) {
+    while (low <= high) { // kalo masih belum ketemu, bakal looping terus
         int mid = low + (high - low) / 2;
 
-        if (array[mid] == target) return mid + 1;
-        else if (array[mid] < target) low = mid + 1;
-        else if (target < array[mid]) high = mid - 1;
+        if (array[mid] == target) return mid + 1; // kalo udah ketemu, lansung berhenti
+        else if (array[mid] < target) low = mid + 1; // geser ke kanan
+        else if (target < array[mid]) high = mid - 1; // geser ke kiri
     }
-    return -1;
+    return -1; // kalo keluar looping (ga ketemu), print -1
 }
 
 // print binary search
