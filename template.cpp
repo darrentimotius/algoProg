@@ -32,7 +32,7 @@ int partition(int array[], int low, int high) {
     // melakukan sorting berdasarkan pivot
     int i = low - 1;
     for (int j = low; j < high; j++) {
-        if (array[j] <= array[high]) {
+        if (array[j] < array[high]) {
             i++;
             swap(&array[i], &array[j]);
         }
