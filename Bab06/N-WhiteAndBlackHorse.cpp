@@ -1,4 +1,4 @@
-    #include <stdio.h>
+#include <stdio.h>
 
 // board = 8 x 8
 // 8 | | | | | | |#
