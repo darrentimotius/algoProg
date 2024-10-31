@@ -1,28 +1,16 @@
 #include <stdio.h>
 
-void swap(long long int *a, long long int *b) {
-    long long int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-int partition(long long int A[], long long int low, long long int high) {
-    long long int i = low - 1;
-    for (int j = low; j < high; j++) {
-        if(A[j] <= A[high]) {
-            i++;
-            swap(&A[i], &A[j]);
-        }
-    }
-    swap(&A[i+1], &A[high]);
-    return i + 1;
-}
-
-void quickSort(long long int A[], long long int low, long long int high) {
-    if (low < high) {
-        int pivot = partition(A, low, high);
-        quickSort(A, low, pivot - 1);
-        quickSort(A, pivot + 1, high);
+int binarySearch(long long int sumA[], int low, int high, long long int target) {
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if (target >= sumA[high]) return high + 1;
+        if (target < sumA[low]) return -1;
+        if (high - low == 1) return low + 1;
+        if (target == sumA[mid]) return mid + 1;
+        
+        if (target < sumA[mid]) high = mid;
+        else if (target > sumA[mid]) low = mid;
     }
 }
 
@@ -31,19 +19,21 @@ int main() {
     scanf("%d", &N);
 
     long long int array[100005];
+    long long int sum = 0;
+    long long int sumArray[100005] = {0};
     for (int i = 0; i < N; i++) {
         scanf("%lld", &array[i]);
+        sum += array[i];
+        sumArray[i] = sum;
     }
-    
-    quickSort(array, 0, N - 1);
 
     int Q;
     scanf("%d", &Q);
 
-    for (int i = 0; i < Q; i++) {
-        int M;
-        scanf("%d", &M);
-        
+    for (int tc = 1; tc <= Q; tc++) {
+        long long int M;
+        scanf("%lld", &M);
+        printf("Case #%d: %d\n", tc, binarySearch(sumArray, 0, N - 1, M));
     }
     return 0;
 }
