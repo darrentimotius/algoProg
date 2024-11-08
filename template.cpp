@@ -65,6 +65,7 @@ int binarySearchRecursion(int array[], int low, int high, int target) {
     if (low > high) return -1; // kalo ga ketemu, print -1
 
     int mid = low + (high - low) / 2;
+    // int mid = low + ((high - low) * (target - array[low]) / (array[high] - array[low]));
 
     if (array[mid] == target) return mid + 1;
     else if (array[mid] < target) return binarySearchRecursion(array, mid + 1, high, target); // kalo lokasinya masih di sebelah kiri dari target, geser ke kanan sampe ketemu target
@@ -74,6 +75,7 @@ int binarySearchRecursion(int array[], int low, int high, int target) {
 int binarySearchLooping(int array[], int low, int high, int target) {
     while (low <= high) { // kalo masih belum ketemu, bakal looping terus
         int mid = low + (high - low) / 2;
+        // int mid = low + ((high - low) * (target - array[low]) / (array[high] - array[low]));
 
         if (array[mid] == target) return mid + 1; // kalo udah ketemu, lansung berhenti
         else if (array[mid] < target) low = mid + 1; // geser ke kanan
@@ -100,7 +102,7 @@ void print(int array[], int n) {
 
 int main() {
     int array[] = {5, 9, -1, -10, 3, 6, 98, 8, 0, 2};
-    int n = 10;
+    int n = sizeof(array) / sizeof(array[0]);
 
     print(array, n);
     printBubbleSort(array, n);
