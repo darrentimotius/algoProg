@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // melakukan swap antara 2 integer
 void swap(int *a, int *b) {
@@ -28,8 +29,12 @@ void printBubbleSort(int array[], int n) {
 }
 
 // quick sort
-int partition(int array[], int low, int high) {
-    // melakukan sorting berdasarkan pivot
+int partition(int array[], int low, int high) { // melakukan sorting berdasarkan pivot
+    
+    // random pivot
+    int r = rand() % (high - low) + low;
+    swap(&array[r], &array[high]);
+
     int i = low - 1;
     for (int j = low; j < high; j++) {
         if (array[j] < array[high]) {
@@ -54,6 +59,63 @@ void printQuickSort(int array[], int low, int high, int n) {
     quickSort(array, low, high);
 
     printf("Array setelah di quick sort : ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+}
+
+// merge sort
+void merge(int array[], int left, int mid, int right) {
+    int i, j, k;
+    int temp[right + 5];
+    i = left;
+    j = mid + 1;
+    k = left;
+
+    while (i <= mid && j <= right) {
+        if (array[i] < array[j]) { // kiri
+            temp[k] = array[i];
+            k++;
+            i++;
+        } else { // kanan
+            temp[k] = array[j];
+            k++;
+            j++;
+        }
+    }
+
+    while (i <= mid) { // copy sisa yang bagian kiri
+        temp[k] = array[i];
+        k++;
+        i++;
+    }
+
+    while (j <= right) { // copy sisa yang bagian kanan
+        temp[k] = array[j];
+        k++;
+        j++;
+    }
+
+    for ( i = left; i <= right; i++) { // copy balikin ke array awal
+        array[i] = temp[i];
+    }
+}
+
+void mergeSort(int array[], int left, int right) {
+    if (left >= right) return;
+    int mid = left + ((right - left) / 2);
+
+    mergeSort(array, left, mid); // rekursi sebelah kirinya mid
+    mergeSort(array, mid + 1, right); // rekursi sebelah kanannya mid
+    merge(array, left, mid, right); // sort per bagian
+}
+
+// print merge sort
+void printMergeSort(int array[], int left, int right, int n) {
+    mergeSort(array, left, right);
+
+    printf("Array setelah di merge sort : ");
     for (int i = 0; i < n; i++) {
         printf("%d ", array[i]);
     }
@@ -107,6 +169,7 @@ int main() {
     print(array, n);
     printBubbleSort(array, n);
     printQuickSort(array, 0, n - 1, n);
+    printMergeSort(array, 0, n - 1, n);
     
     int target = 0;
     printf("Input angka yang ingin dicari lokasinya setelah di sorting : ");
