@@ -1,84 +1,141 @@
-// Merge Sort
-// Quick Sort
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-void swap (int *a, int *b) {
-    int temp = *a;
+void swap(int *a, int *b) {
+    int c = *a;
     *a = *b;
-    *b = temp;
+    *b = c;
 }
 
-void printArr (int arr[], int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d ", arr[i]);
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int k = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[k]) {
+                k = j;
+            }
+        if (k != i) {
+            swap(&arr[k], &arr[i]);
+        }
+        }
     }
-    printf("\n");
 }
 
-void merge (int arr[], int left, int mid, int right) {
-    int leftSize = mid - left + 1;
-    int rightSize = right - mid;
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(&arr[j], &arr[j+1]);
+            }
+        }
+    }
+}
 
-    int L[leftSize], R[rightSize]; // temporary array
-
-    // isi array temp left
-    for (int i = 0; i < leftSize; i++) {
-        L[i] = arr[left + i];
+void countingSort(int arr[], int n, int k) {
+    int count[k+5];
+    for (int i = 0; i < k + 5; i++) {
+        count[i] = 0;
     }
 
-    // isi array temp kanan
-    for (int i = 0; i < rightSize; i++) {
-        R[i] = arr[mid + 1 + i];
+    for (int i = 0; i < n; i++) {
+        count[arr[i]]++;
     }
 
-    int i = 0, j = 0, k = left;
+    int m = 0;
+    for (int i = 0; i < k + 5; i++) {
+        for (int j = 0; j < count[i]; j++) {
+            arr[m] = i;
+            m++;
+        }
+    }
+}
 
-    while (i < leftSize && j < rightSize) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
+void merge(int arr[], int l, int m, int r) {
+    int i, j, k;
+    int temp[r + 5];
+    i = l;
+    j = m + 1;
+    k = l;
+
+    while (i <= m && j <= r) {
+        if (arr[i] < arr[j]) { // kiri
+            temp[k] = arr[i];
+            k++;
             i++;
-        } else {
-            arr[k] = R[j];
+        } else { // kanan
+            temp[k] = arr[j];
+            k++;
             j++;
         }
-        k++;
     }
 
-    while (i < leftSize) {
-        arr[k] = L[i];
+    while (i <= m) { // copy sisa yang bagian kiri
+        temp[k] = arr[i];
+        k++;
         i++;
-        k++;
     }
 
-    while (j < rightSize) {
-        arr[k] = R[j];
-        j++;
+    while (j <= r) { // copy sisa yang bagian kanan
+        temp[k] = arr[j];
         k++;
+        j++;
+    }
+
+    for ( i = l; i <= r; i++) { // copy balikin ke array awal
+        arr[i] = temp[i];
     }
 }
 
-// Merge Sort
-void mergeSort (int arr[], int left, int right) {
-    if (left < right) {
-        int mid = left + (right - left) / 2;
+void mergeSort(int arr[], int l, int r) {
+    if (l >= r) return;
+    int m = l + ((r - l) / 2);
 
-        mergeSort(arr, left, mid); // left side
-        mergeSort(arr, mid+1, right); // right side
+    mergeSort(arr, l, m);
+    mergeSort(arr, m + 1, r);
+    merge(arr, l, m, r);
+}
 
-        merge(arr, left, mid, right);
+int partition(int arr[], int low, int high) {
+    int r = rand() % (high - low) + low;
+    swap(&arr[r], &arr[high]);
+
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
     }
+    swap(&arr[i + 1], &pivot);
+    return i + 1;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low >= high) return;
+
+    int pi = partition(arr, low, high);
+    quickSort(arr, low, pi - 1);
+    quickSort(arr, pi + 1, high);
 }
 
 int main() {
-    int numbers[] = {30, 50, 21, 9, 3, 8, 20, 45};
-    int size = sizeof(numbers) / sizeof(numbers[0]);
-    puts("Before sort:");
-    printArr(numbers, size);
-
-    puts("After sort:");
-    mergeSort(numbers, 0, size - 1);
-    printArr(numbers, size);
-
+    // srand(time(0));
+    int angka[100005];
+    for (int i = 0; i < 100000; i++) {
+        angka[i] = rand() % 100000 + 1;
+        printf("%d, ", angka[i]);
+    }
+    printf("\n");
+    // selectionSort(angka, 100000);
+    // bubbleSort(angka, 100000);
+    // countingSort(angka, 20, 100001);
+    mergeSort(angka, 0, 99999);
+    quickSort(angka, 0, 99999);
+    for (int i = 0; i < 100000; i++) {
+        printf("%d, ", angka[i]);
+    }
+    printf("\n");
     return 0;
 }
