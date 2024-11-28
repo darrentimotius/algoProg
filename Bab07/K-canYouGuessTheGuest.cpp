@@ -44,7 +44,7 @@ int main() {
 
         int a = array[0] / 2;
         int b = array[1] - a; 
-        int c = array[3] - a;
+        int c = array[4] - a;
         int e = array[24] / 2;
         int d = array[23] - e;
 
