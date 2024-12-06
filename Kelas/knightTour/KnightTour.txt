@@ -1,0 +1,9 @@
+Knight's Tour
+Given a chess board of size N x M and a starting position (A, B) of a knight, the task is to find the number of possible moves the knight can make on the board such that it visits every square exactly once.
+
+Format Input:
+The first line of input contains three integers N, M, and the starting position of the knight (A, B).
+
+Format Output:
+The first line of output contains a string "Yes" if the knight can visit every square exactly once, otherwise "No". 
+If the knight can visit every square exactly once, the second line contains the sequence of moves the knight makes.
