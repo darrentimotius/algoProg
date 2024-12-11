@@ -195,7 +195,7 @@ void merge(item yupi[], int left, int mid, int right) {
 	int i = left, j = mid + 1, k = left;
 	item temp[right + 5];
 	
-	while (i <= mid || j <= right) {
+	while (i <= mid && j <= right) {
 		if (strcmp(yupi[i].name, yupi[j].name) > 0) {
 			temp[k] = yupi[i];
 			k++;
@@ -296,40 +296,68 @@ void buy() {
 		return;
 	}
 	
+	// View
+	for (int i = 0; i < yupiCount; i++) {
+			printf("No. %d\n", i + 1);
+			printf("ID : %s\n", yupi[i].id);
+			printf("Name : %s\n", yupi[i].name);
+			printf("Category : %s\n", yupi[i].category);
+			printf("Stock : %d\n", yupi[i].stock);
+			printf("Price : %d\n", yupi[i].price);
+			puts("=======================");
+		}
+	
 	// Name
 	char name[100];
+	int flag = 0, quantityLoc = 0;
 	do {
 		printf("Enter candy name : ");
 		scanf("%[^\n]", name); gc
 		
+		for (int i = 0; i < yupiCount; i++) {
+			if (strcmp(name, yupi[i].name) == 0) {
+				flag = 1;
+				quantityLoc = i;
+				break;
+			}
+		}
 		if (strlen(name) < 8 || strlen(name) > 20)
 			puts("Input must be between 8 to 20");
-	} while (strlen(name) < 8 || strlen(name) > 20);
-	
-	int quantityLoc = 0;
-	for (int i = 0; i < yupiCount; i++) {
-		if (strcmp(yupi[i].name, name) == 0) {
-			quantityLoc = i;
-			break;
-		}
-	}
+		else if (!flag) 
+			puts("There is no candy");
+	} while (strlen(name) < 8 || strlen(name) > 20 || !flag);
 	
 	int toBuy = 0;
 	do {
 		printf("Enter candy quantity you want to buy : ");
 		scanf("%d", &toBuy); gc
 		
-		if (toBuy > yupi[quantityLoc].stock || toBuy < 0) puts("Quantity must not exceed the available stock");
-	} while (toBuy > yupi[quantityLoc].stock || toBuy < 0);
+		if (toBuy > yupi[quantityLoc].stock || toBuy < 1) puts("Quantity must not exceed the available stock");
+	} while (toBuy > yupi[quantityLoc].stock || toBuy < 1);
 	
-	if (toBuy < yupi[quantityLoc].stock) yupi[quantityLoc].stock -= toBuy;
-	else {
-		for (int i = quantityLoc; i < yupiCount - 1; i++) {
-			yupi[i] = yupi[i + 1];
+	char validation[30];
+	do {
+		printf("Are you sure want to buy this candy [yes / no] : ");
+		scanf("%s", validation); gc
+		if (strcmp(validation, "Yes") != 0 && strcmp(validation, "No") != 0 &&
+			strcmp(validation, "yes") != 0 && strcmp(validation, "no") != 0)
+				puts("Input must be yes or no");
+	} while (strcmp(validation, "Yes") != 0 && strcmp(validation, "No") != 0 &&
+			strcmp(validation, "yes") != 0 && strcmp(validation, "no") != 0);
+			
+	if (strcmp(validation, "yes") == 0 || strcmp(validation, "Yes") == 0) {
+		if (toBuy < yupi[quantityLoc].stock) yupi[quantityLoc].stock -= toBuy;
+		else {
+			for (int i = quantityLoc; i < yupiCount - 1; i++) {
+				yupi[i] = yupi[i + 1];
+			}
+			yupiCount--;
 		}
-		yupiCount--;
+		saveFile();
+		puts("Candy has been successfully bought");
+	} else {
+		puts("Buy candy has been canceled");
 	}
-	saveFile();
-	puts("Candy has been successfully bought");
+	
 	enterToContinue();
 }
