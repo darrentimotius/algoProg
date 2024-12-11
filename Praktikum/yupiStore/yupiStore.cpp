@@ -58,7 +58,7 @@ int main() {
 
 void saveFile() {
 	FILE *f = fopen("candy.txt", "w");
-	 
+
 	if (f == NULL) {
 		puts("Error loading file....");
 		enterToContinue();
@@ -92,7 +92,7 @@ void loadFile() {
 }
 
 void printMenu() {
-	system("cls");
+	system("clear");
 	loadFile();
 	puts(" __     __          _  _____ _                 ");
 	puts(" \\ \\   / /         (_)/ ____| |                ");
