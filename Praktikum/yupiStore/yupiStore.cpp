@@ -28,7 +28,6 @@ void buy();
 
 int main() {
 	do {
-		srand(time(0));
 		int input = -1;
 		printMenu();
 		
@@ -58,7 +57,7 @@ int main() {
 
 void saveFile() {
 	FILE *f = fopen("candy.txt", "w");
-
+	 
 	if (f == NULL) {
 		puts("Error loading file....");
 		enterToContinue();
@@ -92,7 +91,7 @@ void loadFile() {
 }
 
 void printMenu() {
-	system("clear");
+	system("cls");
 	loadFile();
 	puts(" __     __          _  _____ _                 ");
 	puts(" \\ \\   / /         (_)/ ____| |                ");
@@ -161,8 +160,11 @@ void create() {
 	// ID
 	sprintf(newYupi.id, "%c%c%03d", newYupi.name[0], newYupi.name[1], yupiCount + 1);
 	
+	if (newYupi.id[0] > 'Z') newYupi.id[0] = newYupi.id[0] - 'a' + 'A';
+	if (newYupi.id[1] > 'Z') newYupi.id[1] = newYupi.id[1] - 'a' + 'A';
+	
 	// Validation
-	printf("ID : %d\n", newYupi.id);
+	printf("ID : %s\n", newYupi.id);
 	printf("Name : %s\n", newYupi.name);
 	printf("Category : %s\n", newYupi.category);
 	printf("Stock : %d\n", newYupi.stock);
