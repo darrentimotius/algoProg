@@ -1,0 +1,30 @@
+BakmieRG
+
+1. Create Bakmie
+- Validasi nama len lebih panjang 3
+- Validasi kategori harus ("Lebar", "Kecil", "Keriting")
+- Validasi stock lebih besar 0
+- validasi price lebih besar 10000
+
+- Kalau udah semua, generate ID dengan format
+[huruf pertama nama bakmie][huruf kedua nama bakmie][0-9][0-9][0-9]
+
+- Kalau udah insert ke file dengan format
+BakmieID#BakmieName#BakmieCategory#BakmieStock#BakmiePrice
+
+
+2. Pilih tampilin apa
+
+1. All
+2. Lebar
+3. Kecil
+4. Keriting
+5. Back
+Tampilin semua data dari file, sort berdasarkan nama menggunakan merge sort / quick sort
+
+3. Buy Bakmie
+- Pilih by nama (validasi ada di data kita atau ga)
+- Input quantity harus lebih besar dari 0 dan lebih kecil dari sama dengan stock bakmie yang dipilih
+- Kalau ada yang quantitynya = 0, hapus dari file
+
+4. Exit
