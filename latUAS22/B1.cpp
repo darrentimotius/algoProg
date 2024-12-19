@@ -39,13 +39,12 @@ int main() {
         scanf("%d", &arr[i]);
     }
 
-    // a
     sort(arr, 0, n - 1);
 
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
+    // for (int i = 0; i < n; i++) {
+    //     printf("%d ", arr[i]);
+    // }
+    // printf("\n");
 
     if (flag) {
         puts("Terdapat Duplikat");
