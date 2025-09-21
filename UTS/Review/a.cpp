@@ -30,27 +30,31 @@
 #include <stdio.h>
 
 int main() {
-    int X, Y, N;
-    scanf("%d %d\n%d", &X, &Y, &N);
+    int x, y;
+    scanf("%d %d", &x, &y); getchar();
 
-    char wasd[1005];
-    scanf("%s", wasd);
+    int n;
+    scanf("%d", &n); getchar();
 
-    for (int i = 0; i < N; i++) {
-        switch (wasd[i]) {
+    char c[1005];
+    scanf("%s", c);
+
+    for (int i = 0; i < n; i++) {
+        switch (c[i]) {
             case 'W':
-                Y += 1;
-                break;
-            case 'A':
-                if (X > 0) X -= 1;
+                y++;
                 break;
             case 'S':
-                if (Y > 0) Y -= 1;
+                if (y > 0) y--;
                 break;
             case 'D':
-                X += 1;
+                x++;
+                break;
+            case 'A':
+                if (x > 0) x--;
                 break;
         }
     }
-    printf("Hov final coordinate is (%d, %d).\n", X, Y);
+
+    printf("Hov final coordinate is (%d, %d).\n", x, y);
 }

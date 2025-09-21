@@ -22,19 +22,20 @@ int main() {
                 if (H[i] == E[0]) {
                     for (int j = 0; j < lengthE; j++) {
                         if (i + lengthE > lengthH) break;
-                        if (H[i] != E[j]) {
+                        if (H[i + j] != E[j]) {
                             flag = 0;
                             break;
                         }
                     }
-                    if (flag) count++;
-                    // if (flag) printf("ada yang sama di i ke %d\n", i);
-                    i += lengthE - 1;
+                    if (flag) {
+                        count++;
+                        i += lengthE - 1;
+                    }
                 }
             }
         }
 
-        printf("%d\n", count);
+        printf("Case #%d: %d\n", tc, count);
     }
     return 0;
 }
